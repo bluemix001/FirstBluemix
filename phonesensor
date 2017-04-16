@@ -1,0 +1,285 @@
+[
+    {
+        "id": "c6e45635.2c5b8",
+        "type": "debug",
+        "z": "61bbbd55.0024a4",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 774,
+        "y": 128,
+        "wires": []
+    },
+    {
+        "id": "d232d07d.d5bef",
+        "type": "function",
+        "z": "61bbbd55.0024a4",
+        "name": "tiltLRだけ選択",
+        "func": "return {payload:msg.payload.d.tiltLR};\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 278,
+        "y": 127,
+        "wires": [
+            [
+                "290656d1.2dfa8a"
+            ]
+        ]
+    },
+    {
+        "id": "290656d1.2dfa8a",
+        "type": "switch",
+        "z": "61bbbd55.0024a4",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "-5",
+                "vt": "num"
+            },
+            {
+                "t": "gte",
+                "v": "5",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 3,
+        "x": 444,
+        "y": 128,
+        "wires": [
+            [
+                "15c39db5.032f22"
+            ],
+            [
+                "8500dbad.3b3d48"
+            ],
+            [
+                "9debdfb0.e4c66"
+            ]
+        ]
+    },
+    {
+        "id": "15c39db5.032f22",
+        "type": "template",
+        "z": "61bbbd55.0024a4",
+        "name": "左",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "左に傾いています！ {{payload}}度",
+        "x": 596,
+        "y": 90,
+        "wires": [
+            [
+                "c6e45635.2c5b8"
+            ]
+        ]
+    },
+    {
+        "id": "8500dbad.3b3d48",
+        "type": "template",
+        "z": "61bbbd55.0024a4",
+        "name": "右",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "右に傾いています！ {{payload}}度",
+        "x": 594,
+        "y": 128,
+        "wires": [
+            [
+                "c6e45635.2c5b8"
+            ]
+        ]
+    },
+    {
+        "id": "9debdfb0.e4c66",
+        "type": "template",
+        "z": "61bbbd55.0024a4",
+        "name": "フラット",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "ほぼフラットです {{payload}}度",
+        "x": 596,
+        "y": 165,
+        "wires": [
+            [
+                "c6e45635.2c5b8"
+            ]
+        ]
+    },
+    {
+        "id": "7cf5bb2e.9737e4",
+        "type": "function",
+        "z": "61bbbd55.0024a4",
+        "name": "データ加工",
+        "func": "var getCurrentTime = function () {\n    var date = new Date();\n    date.setHours(date.getHours() + 9);\n    var d = date.getFullYear() + '-';\n    d += ('0' + (date.getMonth() + 1)).slice(-2) + '-';\n    d += ('0' + date.getDate()).slice(-2) + 'T';\n    d += ('0' + date.getHours()).slice(-2) + ':';\n    d += ('0' + date.getMinutes()).slice(-2) + ':';\n    d += ('0' + date.getSeconds()).slice(-2) + 'Z';\n    return d;\n};\n\nmsg.payload =  {\n    \"timestamp\": getCurrentTime(),\n    \"tiltLR\": msg.payload.d.tiltLR,\n    \"tiltFB\": msg.payload.d.tiltFB,\n    \"accelX\": msg.payload.d.accelX\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 265,
+        "y": 286.5,
+        "wires": [
+            [
+                "247456c0.bb1b5a"
+            ]
+        ]
+    },
+    {
+        "id": "febfb99e.b5dab",
+        "type": "ibmiot in",
+        "z": "61bbbd55.0024a4",
+        "authentication": "quickstart",
+        "apiKey": "",
+        "inputType": "evt",
+        "deviceId": "492150899385",
+        "applicationId": "",
+        "deviceType": "+",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "quickstart",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": true,
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "x": 63,
+        "y": 202.5,
+        "wires": [
+            [
+                "d232d07d.d5bef",
+                "7cf5bb2e.9737e4",
+                "d5c04895.967318"
+            ]
+        ]
+    },
+    {
+        "id": "eaf7c1f6.b773d8",
+        "type": "http in",
+        "z": "61bbbd55.0024a4",
+        "name": "",
+        "url": "/sensor",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 274,
+        "y": 356,
+        "wires": [
+            [
+                "2cf3a642.760aaa"
+            ]
+        ]
+    },
+    {
+        "id": "1bd6c266.a9b7be",
+        "type": "http response",
+        "z": "61bbbd55.0024a4",
+        "name": "",
+        "x": 520,
+        "y": 354,
+        "wires": []
+    },
+    {
+        "id": "2cf3a642.760aaa",
+        "type": "template",
+        "z": "61bbbd55.0024a4",
+        "name": "センサー可視化",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n<head>\n\t<title>Phone Sensor Visualization App</title>\n\n    <script type=\"text/javascript\">\n      var wsUrl = \"wss://\" + window.location.host + \"/ws/sensor\";\n      \n      var socket;\n      var tiltData, accelData;\n      var tiltOptions, accelOptions;\n      var tiltChart, accelChart;\n      \n      // Google Gauge\n      google.load(\"visualization\", \"1\", {packages:[\"gauge\"]});\n      google.setOnLoadCallback(drawChart);\n      function drawChart() {\n        // Data for tilt chart\n        tiltData = google.visualization.arrayToDataTable([\n          ['Label', 'Value'],\n          ['左右傾き', 0],\n          ['前後傾き', 0]\n        ]);\n        \n        // Data for accel chart\n        accelData = google.visualization.arrayToDataTable([\n          ['Label', 'Value'],\n          ['x軸加速度', 0]\n        ]);\n        \n        // Option for tilt chart\n        // If you want to set other options, please refer to https://developers.google.com/chart/interactive/docs/gallery/gauge\n        tiltOptions = {\n          width: 600, height: 180,\n          min: -90, max: 90,\n          redFrom: 70, redTo: 90,\n          yellowFrom:60, yellowTo: 70,\n          minorTicks: 5\n        };\n\n\n        // Option for accel chart\n        accelOptions = {\n          width: 600, height: 180,\n          min: -15, max: 15,\n          redFrom: 10, redTo: 15,\n          yellowFrom:7, yellowTo: 10,\n          minorTicks: 1\n        };\n        \n        tiltChart = new google.visualization.Gauge(document.getElementById('tiltChart'));\n        accelChart = new google.visualization.Gauge(document.getElementById('accelChart'));\n        \n        tiltChart.draw(tiltData, tiltOptions);\n        accelChart.draw(accelData, accelOptions);\n      };\n      \n      function connect() {\n        socket = new WebSocket(wsUrl);\n        socket.onmessage = function(e) {\n          var sensorData = JSON.parse(e.data);\n          \n          // Update temperature data\n          tiltData.setValue(0, 1, sensorData.tiltLR);\n          tiltData.setValue(1, 1, sensorData.tiltFB);\n          \n          // Update humidity data\n          accelData.setValue(0, 1, sensorData.accelX);\n          \n          tiltChart.draw(tiltData, tiltOptions);\n          accelChart.draw(accelData, accelOptions);\n        };\n      };\n      \n      function disconnect() {\n        socket.close();\n      };\n        \n    </script>\n\n<style>\n  body {\n    background-color: #26343F;\n  }\n  .main {\n    background-size: 100%;\n    background-repeat: repeat-x;\n    background: linear-gradient(to top right, rgba(29, 54, 73, 1), rgba(45, 63, 74, 0.98)), url(http://roadshow.mybluemix.net/images/i-l-pattern.png);\n    padding-left:30px; \n  }\n  .logo {\n    font-size:16px; \n    color: white;\n    font-family: sans-serif;\n    margin-top:12px; \n    padding-left:10px; \n    margin-bottom:15px;\n    display:inline-block;\n\t}\n  .title {\n    font-size:48px; \n    color: white;\n    font-family: sans-serif;\n    margin-top:20px; \n    padding-left:40px; \n    margin-bottom:0px;\n    display:inline-block;\n\t}\n  .sub-title {\n    font-size:24px; \n    color: #41D6C3;\n    font-family: sans-serif;\n    margin-top:10px; \n    padding-left:40px; \n    margin-bottom:10px;\n    display:block;\n\t}\n</style>\n</head>\n<body>\n\t<span class=\"logo\" >IBM <b>Bluemix</b></span>\n\t<section class=\"main\">\t\t\n\t\t<div class=\"title\">Phone Sensor Visualization App</div>\n\t\t<div class=\"sub-title\">Powered by Node-RED</div>\n\t\n        <button onclick=\"connect()\">接続</button>\n        <button onclick=\"disconnect()\">切断</button>\n        \n  <table class=\"columns\">\n    <tr>\n      <td>\n        <div id=\"tiltChart\" style=\"width: 600px; height: 180px;\"></div>\n      </td>\n    </tr>\n    <tr>\n      <td>\n        <div id=\"accelChart\" style=\"width: 600px; height: 180px;\"></div>\n      </td>\n    </tr>\n  </table>\n\n</section>\n    \t<span class=\"logo\" >IBM Cognitive Workshop</span>\n</body>\n</html>",
+        "x": 412,
+        "y": 429,
+        "wires": [
+            [
+                "1bd6c266.a9b7be"
+            ]
+        ]
+    },
+    {
+        "id": "247456c0.bb1b5a",
+        "type": "websocket out",
+        "z": "61bbbd55.0024a4",
+        "name": "",
+        "server": "523b5aca.f421b4",
+        "client": "",
+        "x": 480,
+        "y": 286,
+        "wires": []
+    },
+    {
+        "id": "d5c04895.967318",
+        "type": "debug",
+        "z": "61bbbd55.0024a4",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "payload.d",
+        "x": 288,
+        "y": 48,
+        "wires": []
+    },
+    {
+        "id": "dc0a98b5.90e768",
+        "type": "http in",
+        "z": "61bbbd55.0024a4",
+        "name": "",
+        "url": "/test",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 82,
+        "y": 604.5,
+        "wires": [
+            [
+                "42dcd2b1.6b523c"
+            ]
+        ]
+    },
+    {
+        "id": "c1e076d9.bc5cf8",
+        "type": "http response",
+        "z": "61bbbd55.0024a4",
+        "name": "",
+        "x": 386,
+        "y": 597,
+        "wires": []
+    },
+    {
+        "id": "42dcd2b1.6b523c",
+        "type": "template",
+        "z": "61bbbd55.0024a4",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<h1>テストページです！</h1>",
+        "x": 250,
+        "y": 554.5,
+        "wires": [
+            [
+                "c1e076d9.bc5cf8"
+            ]
+        ]
+    },
+    {
+        "id": "523b5aca.f421b4",
+        "type": "websocket-listener",
+        "z": "61bbbd55.0024a4",
+        "path": "/ws/sensor",
+        "wholemsg": "false"
+    }
+]
