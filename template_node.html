@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>センサーデータ可視化アプリ</title>
+   <title>センサーデータ可視化アプリ</title>
 
-
-    <script type="text/javascript" src="//www.google.com/jsapi"></script>
-    
-    <script type="text/javascript">
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+   <script type="text/javascript">
+	    
       var wsUrl = "wss://" + window.location.host + "/ws/sensor";
       
       var socket;
@@ -15,8 +14,9 @@
       var tiltChart, accelChart;
       
       // Google Gauge
-      google.load("visualization", "1", {packages:["gauge"]});
-      google.setOnLoadCallback(drawChart);
+        google.charts.load('current', {packages: ['gauge']});
+  	google.charts.setOnLoadCallback(drawChart);
+	    
       function drawChart() {
         // Data for tilt chart
         tiltData = google.visualization.arrayToDataTable([
@@ -79,7 +79,7 @@
         socket.close();
       };
         
-    </script>
+   </script>
 
 <style>
   body {
