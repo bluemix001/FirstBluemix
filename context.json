@@ -1,0 +1,395 @@
+[
+    {
+        "id": "aa4b9062.72f398",
+        "type": "tab",
+        "label": "1st",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "bf06326d.a3f618",
+        "type": "tab",
+        "label": "2nd",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "724f21a4.b401f8",
+        "type": "inject",
+        "z": "aa4b9062.72f398",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 118.88890075683594,
+        "y": 111.11109161376953,
+        "wires": [
+            [
+                "6de80f14.ba9038"
+            ]
+        ]
+    },
+    {
+        "id": "6de80f14.ba9038",
+        "type": "function",
+        "z": "aa4b9062.72f398",
+        "name": "フローコンテキストとして関数定義",
+        "func": "context.flow.testfunc = function(){return \"テストです\"};\nmsg.payload = context.flow.testfunc();\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 363.88890075683594,
+        "y": 111.11109161376953,
+        "wires": [
+            [
+                "4b6bd639.6bb438"
+            ]
+        ]
+    },
+    {
+        "id": "4b6bd639.6bb438",
+        "type": "debug",
+        "z": "aa4b9062.72f398",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 620.8889007568359,
+        "y": 111.11109161376953,
+        "wires": []
+    },
+    {
+        "id": "449c8c1b.659644",
+        "type": "inject",
+        "z": "aa4b9062.72f398",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 120.88890075683594,
+        "y": 180.11109161376953,
+        "wires": [
+            [
+                "6560f991.a6f118"
+            ]
+        ]
+    },
+    {
+        "id": "6560f991.a6f118",
+        "type": "function",
+        "z": "aa4b9062.72f398",
+        "name": "関数呼び出し",
+        "func": "msg.payload = context.flow.testfunc() + ':別フローから呼び出し';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 304.88890075683594,
+        "y": 179.11109161376953,
+        "wires": [
+            [
+                "5af8e52a.4fcac4"
+            ]
+        ]
+    },
+    {
+        "id": "5af8e52a.4fcac4",
+        "type": "debug",
+        "z": "aa4b9062.72f398",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 620.8889007568359,
+        "y": 177.11109161376953,
+        "wires": []
+    },
+    {
+        "id": "b4f454c7.1f9148",
+        "type": "comment",
+        "z": "aa4b9062.72f398",
+        "name": "フローコンテキスト",
+        "info": "",
+        "x": 115.38890075683594,
+        "y": 39.11109161376953,
+        "wires": []
+    },
+    {
+        "id": "4f4431e6.60415",
+        "type": "inject",
+        "z": "aa4b9062.72f398",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 119.88890075683594,
+        "y": 349.11109161376953,
+        "wires": [
+            [
+                "c7e554c5.09aa28"
+            ]
+        ]
+    },
+    {
+        "id": "c7e554c5.09aa28",
+        "type": "function",
+        "z": "aa4b9062.72f398",
+        "name": "グローバルコンテキストとして関数定義",
+        "func": "context.global.testfunc = function(){return \"テストです\"};\nmsg.payload = context.global.testfunc();\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 384.88890075683594,
+        "y": 349.11109161376953,
+        "wires": [
+            [
+                "227aa257.fe1c06"
+            ]
+        ]
+    },
+    {
+        "id": "227aa257.fe1c06",
+        "type": "debug",
+        "z": "aa4b9062.72f398",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 621.8889007568359,
+        "y": 349.11109161376953,
+        "wires": []
+    },
+    {
+        "id": "bdf56f79.fc37f",
+        "type": "inject",
+        "z": "aa4b9062.72f398",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 121.88890075683594,
+        "y": 418.11109161376953,
+        "wires": [
+            [
+                "6fc47c01.562ea4"
+            ]
+        ]
+    },
+    {
+        "id": "6fc47c01.562ea4",
+        "type": "function",
+        "z": "aa4b9062.72f398",
+        "name": "関数呼び出し",
+        "func": "msg.payload = context.global.testfunc() + ':同一タブのフローから呼び出し';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 305.88890075683594,
+        "y": 417.11109161376953,
+        "wires": [
+            [
+                "166be6e9.b62e69"
+            ]
+        ]
+    },
+    {
+        "id": "166be6e9.b62e69",
+        "type": "debug",
+        "z": "aa4b9062.72f398",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 621.8889007568359,
+        "y": 415.11109161376953,
+        "wires": []
+    },
+    {
+        "id": "a54ad58b.2b97",
+        "type": "comment",
+        "z": "aa4b9062.72f398",
+        "name": "グローバルコンテキスト",
+        "info": "",
+        "x": 136.38890075683594,
+        "y": 277.11109161376953,
+        "wires": []
+    },
+    {
+        "id": "d66bf9c3.1b0678",
+        "type": "inject",
+        "z": "bf06326d.a3f618",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 116.66667175292969,
+        "y": 125.88887786865234,
+        "wires": [
+            [
+                "89d3aeb8.f837a"
+            ]
+        ]
+    },
+    {
+        "id": "89d3aeb8.f837a",
+        "type": "function",
+        "z": "bf06326d.a3f618",
+        "name": "関数呼び出し",
+        "func": "msg.payload = context.global.testfunc() + ':別タブのフローから呼び出し';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 300.6666717529297,
+        "y": 124.88887786865234,
+        "wires": [
+            [
+                "d0212dee.9f26f8"
+            ]
+        ]
+    },
+    {
+        "id": "d0212dee.9f26f8",
+        "type": "debug",
+        "z": "bf06326d.a3f618",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 616.6666717529297,
+        "y": 122.88887786865234,
+        "wires": []
+    },
+    {
+        "id": "8c1b2750.f1f25",
+        "type": "comment",
+        "z": "bf06326d.a3f618",
+        "name": "グローバルコンテキスト",
+        "info": "",
+        "x": 131.1666717529297,
+        "y": 44.888877868652344,
+        "wires": []
+    },
+    {
+        "id": "1747177a.aa3609",
+        "type": "inject",
+        "z": "aa4b9062.72f398",
+        "name": "",
+        "topic": "",
+        "payload": "SET",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 118.88890075683594,
+        "y": 579.1110916137695,
+        "wires": [
+            [
+                "f6e740d2.db5798"
+            ]
+        ]
+    },
+    {
+        "id": "f6e740d2.db5798",
+        "type": "function",
+        "z": "aa4b9062.72f398",
+        "name": "",
+        "func": "global.set(\"tmp\", 110);  // グローバル変数にセット\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 269.88890075683594,
+        "y": 607.1110916137695,
+        "wires": [
+            [
+                "24823c2b.105ea4"
+            ]
+        ]
+    },
+    {
+        "id": "24823c2b.105ea4",
+        "type": "debug",
+        "z": "aa4b9062.72f398",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 445.88890075683594,
+        "y": 639.1110916137695,
+        "wires": []
+    },
+    {
+        "id": "c2d379e5.968f1",
+        "type": "comment",
+        "z": "aa4b9062.72f398",
+        "name": "グローバル変数",
+        "info": "",
+        "x": 109.88890075683594,
+        "y": 513.1110916137695,
+        "wires": []
+    },
+    {
+        "id": "c4d082b1.56fe9",
+        "type": "inject",
+        "z": "bf06326d.a3f618",
+        "name": "",
+        "topic": "",
+        "payload": "GET",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 102.66667175292969,
+        "y": 339.88887786865234,
+        "wires": [
+            [
+                "696d07b3.c29b88"
+            ]
+        ]
+    },
+    {
+        "id": "867cc7a5.73cdd",
+        "type": "debug",
+        "z": "bf06326d.a3f618",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 464.6666717529297,
+        "y": 420.88887786865234,
+        "wires": []
+    },
+    {
+        "id": "696d07b3.c29b88",
+        "type": "function",
+        "z": "bf06326d.a3f618",
+        "name": "",
+        "func": "msg.payload = 'グローバル変数の値' + global.get(\"tmp\") + 'をGET';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 282.1666717529297,
+        "y": 379.88887786865234,
+        "wires": [
+            [
+                "867cc7a5.73cdd"
+            ]
+        ]
+    },
+    {
+        "id": "40480964.c47af",
+        "type": "comment",
+        "z": "bf06326d.a3f618",
+        "name": "グローバル変数",
+        "info": "",
+        "x": 111.66667175292969,
+        "y": 260.88887786865234,
+        "wires": []
+    }
+]
